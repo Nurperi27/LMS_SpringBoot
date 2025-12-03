@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f6f2ff;
+        }
+        .main-content {
+            margin-right: 220px; /* место под правую панель */
+            padding: 20px;
+        }
+        /* Правая панель */
+        .right-sidebar {
+            width: 200px;
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            background-color: #6a5acd;
+            color: white;
+            padding: 15px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+        .right-sidebar h3 {
+            margin-top: 0;
+            font-size: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding-bottom: 5px;
+        }
+        .right-sidebar a {
+            color: white;
+            text-decoration: none;
+        }
+        .right-sidebar a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        /* Карточки курсов */
+        .c-card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .c-card {
+            width: 18rem;
+            border: 1px solid #ccc;
+            border-radius: 9px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            background: white;
+        }
+        .c-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .c-card-body {
+            padding: 10px;
+        }
+        .c-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4527A0;
+            margin-bottom: 10px;
+        }
+        .course-buttons a {
+            padding: 6px 12px;
+            margin-right: 5px;
+            text-decoration: none;
+            background-color: mediumslateblue;
+            color: white;
+            border-radius: 6px;
+            transition: 0.2s;
+            font-size: 14px;
+        }
+        .course-buttons a:hover {
+            background-color: #5a3eb0;
+        }
+        .course-add {
+            display: inline-block;
+            border: 2px solid #7C4DFF;
+            border-radius: 12px;
+            padding: 10px 15px;
+            margin: 20px;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-decoration: none;
+            color: #4527A0;
+            font-weight: bold;
+            transition: 0.25s;
+        }
+        .course-add:hover {
+            background-color: #e0d4ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+    <div class="c-card-container">
+        <div class="c-card" th:each="c : ${allCourses}">
+            <img th:src="${c.getImage()}" class="c-img" alt="course img">
+            <div class="c-card-body">
+                <h5 class="c-title" th:text="${c.getTitleCourse()}">Course Title</h5>
+                <p class="c-desc" th:text="${c.getDescription()}">Description</p>
+                <p class="c-date" th:text="${c.getStartDate()}"><small>Start Date</small></p>
+                <div class="course-buttons">
+                   <a th:href="@{/courses/{idCourse}/lessons(idCourse=${c.idCourse})}">Enter</a>
+                    <a th:href="@{/courses/{id}(id=${c.idCourse})}">Edit</a>
+                    <a th:href="@{/courses/{id}/deleteC (id=${c.idCourse})}">&#128465;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a th:href="@{/courses/newC}" class="course-add">Add course</a>
+    </div>
+    <div class="right-sidebar">
+        <h3><a th:href="@{/login}">Log in</a></h3>
+        <h3><a th:href="@{/instructors}" style="color:white; text-decoration:none;">Instructors</a></h3>
+        <h3><a th:href="@{/students}" style="color:white; text-decoration:none;">Students</a></h3>
+    </div>
+</body>
+</html>

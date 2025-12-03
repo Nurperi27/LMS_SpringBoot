@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: black;
+            font-family: Arial, sans-serif;
+            background-size: cover;
+        }
+        .login-container{
+            width: 400px;
+            margin: 120px auto;
+            background: white;
+            padding: 35px;
+            border-radius: 14px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        h3{
+            margin: 0 0 25px 0;
+            color: #333;
+            font-weight: bold;
+        }
+        .e-input{
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+            margin-bottom: 20px;
+            outline: none;
+            transition: 0.2s;
+        }
+        .e-input{
+            border-color: #5a3eb0;
+            box-shadow: 0 0 5px rgba(26,174,245,0.4);
+        }
+        .log-btn {
+            width: 100%;
+            background: mediumslateblue;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .log-btn:hover {
+            background: #b3a8ff;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+    <h3>Enter your email</h3>
+    <form th:action="@{/login/check}" method="POST">
+        <input class="e-input" type="email" name="email" placeholder="Enter email" required/>
+        <button class="log-btn" type="submit">Login</button>
+    </form>
+    <p class="error" th:if="${error}" th:text="${error}"
+    ></p>
+    </div>
+</body>
+</html>

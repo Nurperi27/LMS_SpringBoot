@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        h1{
+            color: rebeccapurple;
+            font-size: larger;
+        }
+        .lesson-add{
+            display: inline-block;
+            padding: 10px 18px;
+            background-color: mediumslateblue;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .lesson-card-container{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .lesson-card{
+            width: 28rem;
+            border: 2px solid #7C4DFF; /* фиолетовая рамка */
+            background: white;          /* белое пространство */
+            border-radius: 12px;
+            padding: 15px 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: 0.25s;
+            position: relative;
+        }
+        .l-number {
+            font-size: 18px;
+            font-weight: bold;
+            color: #5E35B1;
+            margin-bottom: 8px;
+        }
+        .l-body {
+            display: block;
+        }
+        .l-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4527A0;
+            margin-bottom: 12px;
+            background: #dcd4ff;
+            padding: 6px 10px;
+            border-radius: 8px;
+        }
+        .l-date {
+            font-size: 14px;
+            color: #555;
+        }
+        .l-desc {
+            color: #333;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+<a th:href="@{/courses/{id}/students(id=${course.idCourse})}">Students</a>
+<a th:href="@{/courses/{id}/instructors(id=${course.idCourse})}">Instructors</a>
+<h1>Lessons</h1>
+<div class="lesson-card-container">
+    <div th:each="l, lStart : ${allLessons}" class="lesson-card">
+        <a class="l-del" th:href="@{/courses/{courseId}/lessons/{lessonId}/deleteLesson(courseId=${course.idCourse}, lessonId=${l.idLesson})}">&#128465;</a>
+        <a class="l-edit" th:href="@{/courses/{courseId}/lessons/{lessonId}(courseId=${course.idCourse}, lessonId=${l.idLesson})}">edit</a>
+        <div class="l-number" th:text="${lStart.count}">#</div>
+        <div class="l-body" th:text="${l.titleLesson}">
+            <h5 class="l-title" th:text="${l.titleLesson}">some title</h5>
+            <p class="l-desc" th:text="${l.descriptionLesson}">some description</p>
+            <p class="l-date"><strong>Date: </strong><span th:text="${l.publisherDate}"></span></p>
+        </div>
+    </div>
+</div>
+<a class="lesson-add" th:href="@{/courses/{idCourse}/addNewLesson(idCourse=${course.idCourse})}">Add Course</a>
+</body>
+</html>

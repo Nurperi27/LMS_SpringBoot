@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        form{
+            background:#e5deff;
+            padding: 25px 30px;
+            border-radius: 12px;
+            width: 350px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        form div{ margin-bottom: 18px;}
+        label{
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+        input[type="text"], input[type="email"]{
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #bfbfbf;
+            font-size: 15px;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        input:focus{
+            border-color: #b3a8ff;
+            box-shadow: 0 0 6px rgba(74, 144, 226, 0.35);
+            outline: none;
+        }
+        .iSubmit{
+            width: 40%;
+            padding: 12px;
+            background-color: mediumslateblue;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.25s, box-shadow 0.25s;
+        }
+        .iResent{
+            width: 40%;
+            padding: 12px;
+            background-color: mediumslateblue;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.25s, box-shadow 0.25s;
+        }
+    </style>
+</head>
+<body>
+    <form th:method="POST" th:action="@{saveInst}" th:object="${newInstructor}">
+        <div>
+            <label for="firstName" class="fn">First Name</label>
+            <input type="text" th:field="*{firstName}" id="firstName">
+        </div>
+        <div>
+            <label for="lastName" class="ln">Last Name</label>
+            <input type="text" th:field="*{lastName}" id="lastName">
+        </div>
+        <div>
+            <label for="email" class="ln">Email</label>
+            <input type="email" th:field="*{email}" id="email">
+        </div>
+        <div>
+            <label for="phoneNumber" class="ln">Phone number</label>
+            <input type="text" th:field="*{phoneNumber}" id="phoneNumber">
+        </div>
+        <button type="submit" class="iSubmit">Save</button>
+        <button type="reset" class="iResent">Clear</button>
+    </form>
+</body>
+</html>

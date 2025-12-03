@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th = "http://www.thymeleaf.org">
+    <title>Title</title>
+    <style>
+        .add{
+            display: inline-block;
+            padding: 10px 18px;
+            background-color: mediumslateblue;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            float: right;
+            margin: 15px 0;
+            transition: 0.2s;
+        }
+        .inst{
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+            clear: both;
+            margin-top: 30px;
+        }
+        .inst thead{
+            background-color: mediumslateblue;
+            color: white;
+        }
+        .inst th, .inst td{
+            padding: 12px 16px;
+            text-align: left;
+        }
+        .inst tbody tr{
+            border-bottom: 1px solid #dee2ef;
+        }
+        .inst tbody tr:hover{
+            background-color: #e9eceF;
+        }
+        .iEdit{
+            display: inline-block;
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            background-color: mediumslateblue;
+            color: white;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .iEdit:hover{
+            background-color: #7b68ee;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        .iDel{
+            display: inline-block;
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            background-color: mediumslateblue;
+            color: white;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .iDel:hover{
+            background-color: #7b68ee;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+<a class="add" th:href="@{/instructors/newInst}" role="button">Add Instructor</a>
+<table class="inst">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="i, iStart : ${allInstructors}">
+        <td th:text="${iStart.count}"></td>
+        <td th:text="${i.firstName}"></td>
+        <td th:text="${i.lastName}"></td>
+        <td th:text="${i.email}"></td>
+        <td th:text="${i.phoneNumber}"></td>
+        <td>
+            <a class="iEdit" th:href="@{/instructors/{idInst}(idInst=${i.getIdInst()})}">edit</a>
+            <a th:href="@{/instructors/{idInst}/deleteInst(idInst=${i.idInst})}" class="iDel">delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/courses}">Back</a>
+</body>
+</html>

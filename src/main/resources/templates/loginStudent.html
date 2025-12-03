@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f6f2ff;
+        }
+        .c-card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            justify-content: center;
+        }
+        .c-card {
+            width: 18rem;
+            border: 1px solid #ccc;
+            border-radius: 9px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            background: white;
+            transition: 0.2s;
+        }
+
+        /*.c-card:hover {*/
+        /*    transform: translateY(-4px);*/
+        /*    box-shadow: 0 4px 14px rgba(0,0,0,0.15);*/
+        /*}*/
+
+        .c-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .c-card-body {
+            padding: 10px;
+        }
+
+        .c-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4527A0;
+            margin-bottom: 10px;
+        }
+
+        .course-buttons a {
+            padding: 6px 12px;
+            margin-right: 5px;
+            text-decoration: none;
+            background-color: mediumslateblue;
+            color: white;
+            border-radius: 6px;
+            transition: 0.2s;
+            font-size: 14px;
+        }
+
+        .course-buttons a:hover {
+            background-color: #5a3eb0;
+        }
+
+        .welcome {
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            color: #4527A0;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h5><a th:href="@{/login}">Log Out</a></h5>
+    <h1 class="welcome" th:text="${student.firstName + ' ' + student.lastName}"></h1>
+    <div class="c-card-container">
+    <div class="c-card" th:each="c : ${courseS}">
+        <img class="c-image" th:src="${c.getImage()}" alt="course image">
+        <div class="c-card-body">
+            <h5 class="c-title" th:text="${c.getTitleCourse()}">Course Title</h5>
+            <p class="c-desc" th:text="${c.getDescription()}">Description</p>
+            <p class="c-date" th:text="${c.getStartDate()}"><small>Start Date</small></p>
+            <div class="course-buttons">
+                <!-- студент может только зайти в курс -->
+                <a th:href="@{/courses/{idCourse}/lessons(idCourse=${c.idCourse})}">Enter</a>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>
