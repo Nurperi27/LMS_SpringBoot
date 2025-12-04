@@ -39,4 +39,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     @Query("select c from Course c join c.instructors i where i.idInst = :instructorId")
     List<Course> getAllCoursesByInstructor(Long instructorId); //получить курсы определенного учителя
+
+    @Query("select c from Course c where :student not member of c.students")
+    List<Course> findCoursesNotAssignedToStudent(@Param("student")Student student);
 }

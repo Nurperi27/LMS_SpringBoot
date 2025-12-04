@@ -136,4 +136,6 @@ public class CourseController {
         model.addAttribute("allInstructors", instructorService.getAllInstructors());
         return "assignedInstructor";
     }
+
+
 }

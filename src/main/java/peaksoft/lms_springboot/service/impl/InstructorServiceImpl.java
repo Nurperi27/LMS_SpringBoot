@@ -46,7 +46,13 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public void deleteInstructor(Long id) {
-        instructorRepository.deleteById(id);
+        Instructor instructor = instructorRepository.findById(id).orElseThrow(() -> new NoSuchElementException("instructor not found"));
+        //удаляем связи с курсами (ьез удаления самих курсов)
+        for(Course course : instructor.getCourses()) {
+            course.getInstructors().remove(instructor);
+        }
+        instructor.getCourses().clear();
+        instructorRepository.delete(instructor);
     }
 
     @Override

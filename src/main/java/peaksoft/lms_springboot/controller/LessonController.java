@@ -4,9 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import peaksoft.lms_springboot.entity.Course;
 import peaksoft.lms_springboot.entity.Lesson;
 import peaksoft.lms_springboot.service.CourseService;
 import peaksoft.lms_springboot.service.LessonService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/lessons")
@@ -34,5 +37,16 @@ public class LessonController {
     public String saveLesson(@RequestParam("idCourse") Long idCourse, @ModelAttribute("newLesson") Lesson lesson){
         lessonService.addLessonToCourseById(idCourse, lesson);
         return "redirect:/courses/" + idCourse + "/lessons";
+    }
+
+    //todo get LESSONS of course By Student
+    //get lessons
+    @GetMapping("/courses/{idCourse}/stLesson")
+    public String getLessonsOfCourse(@PathVariable("idCourse") Long idCourse, Model model){
+        Course course = courseService.getCourseById(idCourse);
+        List<Lesson> lessonL = lessonService.getAllLessonsByCourseId(idCourse);
+        model.addAttribute("course", course); //for button Enter
+        model.addAttribute("allLessons", lessonL); //list of Lessons
+        return "studentLesson";
     }
 }

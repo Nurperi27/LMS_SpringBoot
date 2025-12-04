@@ -4,21 +4,38 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import peaksoft.lms_springboot.entity.Course;
+import peaksoft.lms_springboot.entity.Lesson;
 import peaksoft.lms_springboot.entity.Student;
 import peaksoft.lms_springboot.service.CourseService;
+import peaksoft.lms_springboot.service.LessonService;
 import peaksoft.lms_springboot.service.StudentService;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Controller
 @RequestMapping("/students")
 @RequiredArgsConstructor
 public class StudentController {
     private final StudentService studentService;
     private final CourseService courseService;
+    private final LessonService lessonService;
 
     //todo get all
     @GetMapping
     public String getAllStudents(Model model){
+        List<Student> students = studentService.getAllStudents();
         model.addAttribute("allStudents", studentService.getAllStudents());
-        model.addAttribute("allCourses", courseService.getAllCourses()); //for assign
+       // model.addAttribute("allCourses", courseService.getAllCourses()); //for assign
+        //досупные курсы для каждого студента
+        Map<Long, List<Course>> courseMap = new HashMap<>();
+        for(Student s : students){
+            List<Course> available = courseService.getAvailableCoursesForStudent(s.getIdStudent());
+            courseMap.put(s.getIdStudent(), available);
+        }
+        model.addAttribute("availableCourse", courseMap);
         return "students";
     }
 
@@ -71,4 +88,5 @@ public class StudentController {
         courseService.addStudentToCourse(idStudents, idCourse);
         return "redirect:/students";
     }
+
 }

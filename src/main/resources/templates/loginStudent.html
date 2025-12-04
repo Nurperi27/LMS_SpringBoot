@@ -86,7 +86,7 @@
             <p class="c-date" th:text="${c.getStartDate()}"><small>Start Date</small></p>
             <div class="course-buttons">
                 <!-- студент может только зайти в курс -->
-                <a th:href="@{/courses/{idCourse}/lessons(idCourse=${c.idCourse})}">Enter</a>
+                <a th:href="@{/lessons/courses/{idCourse}/stLesson(idCourse=${c.idCourse})}">Enter</a>
             </div>
         </div>
     </div>

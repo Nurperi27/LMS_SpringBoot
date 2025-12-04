@@ -120,7 +120,7 @@
                 <input type="hidden" name="idStudents" th:value="${s.idStudent}">
                 <select name="idCourse" class="c-select" required>
                     <option value="">choose course</option>
-                    <option th:each="c : ${allCourses}"
+                    <option th:each="c : ${availableCourse.get(s.idStudent)}"
                             th:value="${c.idCourse}"
                             th:text="${c.titleCourse}">
                     </option>

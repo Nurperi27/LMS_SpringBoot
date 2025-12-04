@@ -6,8 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import peaksoft.lms_springboot.entity.Instructor;
 import peaksoft.lms_springboot.service.InstructorService;
+
 @Controller
-@RequestMapping("instructors")
+@RequestMapping("/instructors")
 @RequiredArgsConstructor
 public class InstructorController {
     private final InstructorService instructorService;
@@ -35,8 +36,8 @@ public class InstructorController {
     //todo update
     //get by id
     @GetMapping("/{idInst}")
-    public String getInstructor(@PathVariable("idInst") Long idInstructor, Model model){
-        model.addAttribute("getInstructor", instructorService.getInstructorById(idInstructor));
+    public String getInstructor(@PathVariable("idInst") Long idInst, Model model){
+        model.addAttribute("getInstructor", instructorService.getInstructorById(idInst));
         return "editInstructor";
     }
     //save edit
@@ -48,7 +49,7 @@ public class InstructorController {
 
     //todo delete
     @GetMapping("/{idInst}/deleteInst")
-    public  String deleteInstructor(@PathVariable("idInst") Long idInst, Model model){
+    public  String deleteInstructor(@PathVariable("idInst") Long idInst){
         instructorService.deleteInstructor(idInst);
         return "redirect:/instructors";
     }

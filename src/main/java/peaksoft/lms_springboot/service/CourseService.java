@@ -1,5 +1,6 @@
 package peaksoft.lms_springboot.service;
 
+import org.springframework.data.repository.query.Param;
 import peaksoft.lms_springboot.entity.Course;
 import peaksoft.lms_springboot.entity.Instructor;
 import peaksoft.lms_springboot.entity.Student;
@@ -17,4 +18,5 @@ public interface CourseService {
     List<Instructor> getInstructorsByCourse(Long courseId);
     List<Course> getAllCoursesByStudentId(Long studentId);
     List<Course> getAllCoursesByInstructor(Long instructorId);
+    List<Course> getAvailableCoursesForStudent(Long studentId);
 }

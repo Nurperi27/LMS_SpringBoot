@@ -9,6 +9,7 @@ import peaksoft.lms_springboot.entity.Student;
 import peaksoft.lms_springboot.repository.CourseRepository;
 import peaksoft.lms_springboot.repository.StudentRepository;
 import peaksoft.lms_springboot.service.CourseService;
+import peaksoft.lms_springboot.service.StudentService;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -18,6 +19,8 @@ import java.util.NoSuchElementException;
 @Transactional
 public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
+    private final StudentRepository studentRepository;
+
     @Override
     public void saveCourse(Course course) {
         courseRepository.save(course);
@@ -45,7 +48,13 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void deleteCourseById(Long id) {
-        courseRepository.deleteById(id);
+        Course course = courseRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Such " + id + " id not found"));
+        //удаляем курс(без удаления instructors)
+        for (Instructor instructor : course.getInstructors()) {
+            instructor.getCourses().remove(course);
+        }
+        course.getInstructors().clear();
+        courseRepository.delete(course);
     }
 
     @Override
@@ -78,4 +87,11 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> getAllCoursesByInstructor(Long instructorId) {
         return courseRepository.getAllCoursesByInstructor(instructorId);
     }
+
+    @Override
+    public List<Course> getAvailableCoursesForStudent(Long studentId) {
+        Student student = studentRepository.findById(studentId).orElseThrow(() -> new NoSuchElementException("Such " + studentId + " id not found"));
+        return courseRepository.findCoursesNotAssignedToStudent(student);
+    }
+
 }
